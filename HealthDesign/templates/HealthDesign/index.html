@@ -1,0 +1,42 @@
+{% extends 'HealthDesign/base.html' %}
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+
+    <!-- Albums -->
+    <div class="row">
+        {% if demographics_list %}
+            {% for demographics in demographics_list %}
+                <div class="col-sm-4 col-lg-2">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h4>{{ demographics.first_name }} {{ demographics.last_name }} </h4>
+                            <h5>{{ demographics.telephone }}</h5>
+
+                            <a href="{% url 'HealthDesign:detail' demographics.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
+                            <a href="{% url 'HealthDesign:demographics-delete' demographics.id %}" class="btn btn-primary btn-sm" role="button">Delete</a>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% else %}
+            <div class="col-sm-12">
+                <br>
+                <a href="{% url 'HealthDesign:demographics-add'%}">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add
+                    </button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+
+</div>
+{% endblock %}

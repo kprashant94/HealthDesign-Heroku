@@ -1,0 +1,56 @@
+{% extends 'HealthDesign/base.html' %}
+{% block title %}Encounter{% endblock %}
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- Left Album Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>{{ demographics.first_name }} {{ demographics.Last_name }}</h3>
+                    <h5> Gender : {{ demographics.gender }}</h5>
+                    <h5> Martial Status : {{ demographics.martial_status }}</h5>
+                    <h5> Religious Affiliation : {{ demographics.religious_affiliation }}</h5>
+                    <h5> Ethnicity : {{ demographics.ethnicity }}</h5>
+                    <h5> Language Spoken : {{ demographics.language_spoken }}</h5>
+                    <h5> Address : {{ demographics.address }}</h5>
+                    <h5> Telephone : {{ demographics.telephone }}</h5>
+                    <h5> Birthday : {{ demographics.birthday }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Song Info -->
+        <div class="col-sm-8 col-md-9">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Encounter</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="demographics_id" value="{{ demographics.id }}">
+                        {% include 'HealthDesign/form_template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

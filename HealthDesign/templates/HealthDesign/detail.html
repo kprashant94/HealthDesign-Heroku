@@ -1,0 +1,379 @@
+{% extends 'HealthDesign/base.html' %}
+{% block title %}{{ demographics.first_name }}{% endblock %}
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid songs-container">
+
+    <div class="row">
+
+        <!-- Left Album Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{% url 'HealthDesign:demographics-update' demographics.id %}" class="btn btn-primary btn-sm" role="button">Edit</a>
+                    <a href="{% url 'HealthDesign:demographics-delete' demographics.id %}" class="btn btn-primary btn-sm" role="button">Delete</a>
+                    <h3>{{ demographics.first_name }} {{ demographics.last_name }}</h3>
+                    <h5> Gender : {{ demographics.gender }}</h5>
+                    <h5> Martial Status : {{ demographics.martial_status }}</h5>
+                    <h5> Religious Affiliation : {{ demographics.religious_affiliation }}</h5>
+                    <h5> Ethnicity : {{ demographics.ethnicity }}</h5>
+                    <h5> Language Spoken : {{ demographics.language_spoken }}</h5>
+                    <h5> Address : {{ demographics.address }}</h5>
+                    <h5> Telephone : {{ demographics.telephone }}</h5>
+                    <h5> Birthday : {{ demographics.birthday }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Song Info -->
+        <div class="col-sm-8 col-md-9">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4> <b>Guardian</b>  - <a href="{% url 'HealthDesign:guardian-add' demographics.id %}" >Add</a></h4>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>First Name</th>
+                            <th>Role</th>
+                            <th>Telephone</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for guardian in demographics.guardian_set.all %}
+                            <tr>
+                                <td>{{ guardian.first_name  }}</td>
+                                <td>{{ guardian.last_name }}</td>
+                                <td>{{ guardian.role }}</td>
+                                <td>{{ guardian.telephone }}</td>
+                                <td>
+                                    <a href="{% url 'HealthDesign:guardian-update' demographics.id guardian.id %}">Edit</a>&nbsp
+                                    <a href="{% url 'HealthDesign:guardian-delete' demographics.id guardian.id %}">Delete</a>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4><b>Provider</b> - <a href="{% url 'HealthDesign:provider-add' demographics.id %}">Add</a></h4>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Telephone</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for provider in demographics.provider_set.all %}
+                            <tr>
+                                <td>{{ provider.name  }}</td>
+                                <td>{{ provider.address }}</td>
+                                <td>{{ provider.telephone }}</td>
+                                <td>
+                                    <a href="{% url 'HealthDesign:provider-update' demographics.id provider.id %}">Edit</a>&nbsp
+                                    <a href="{% url 'HealthDesign:provider-delete' demographics.id provider.id %}">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h4><b>Allergies</b> - <a href="{% url 'HealthDesign:allergies-add' demographics.id %}">Add</a></h4>
+
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Allergy Name</th>
+                            <th>Reaction</th>
+                            <th>Severity</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for allergy in demographics.allergies_set.all %}
+                            <tr>
+                                <td>{{ allergy.allergy_name  }}</td>
+                                <td>{{ allergy.reaction }}</td>
+                                <td>{{ allergy.severity }}</td>
+                                <td>
+                                    <a href="{% url 'HealthDesign:allergies-update' demographics.id allergy.id %}">Edit</a>&nbsp
+                                    <a href="{% url 'HealthDesign:allergies-delete' demographics.id allergy.id %}">Delete</a>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4> <b>Immunizations</b> - <a href="{% url 'HealthDesign:immunizations-add' demographics.id %}">Add</a></h4>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Immunizations Name</th>
+                            <th>Type</th>
+                            <th>Dose Quantity</th>
+                            <th>Instructions</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for immunization in demographics.immunizations_set.all %}
+                            <tr>
+                                <td>{{ immunization.date  }}</td>
+                                <td>{{ immunization.immunizations_name }}</td>
+                                <td>{{ immunization.type }}</td>
+                                <td>{{ immunization.dose_quantity }}</td>
+                                <td>{{ immunization.instructions }}</td>
+                                <td>
+                                    <a href="{% url 'HealthDesign:immunizations-update' demographics.id immunization.id %}">Edit</a>&nbsp
+                                    <a href="{% url 'HealthDesign:immunizations-delete' demographics.id immunization.id %}">Delete</a>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4> <b>Medication</b> - <a href="{% url 'HealthDesign:medication-add' demographics.id %}">Add</a></h4>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Medication Name</th>
+                            <th>Instructions</th>
+                            <th>Dose Quantity</th>
+                            <th>Rate Quantity</th>
+                            <th>Prescriber Name</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for medication in demographics.medication_set.all %}
+                            <tr>
+                                <td>{{ medication.date  }}</td>
+                                <td>{{ medication.type }}</td>
+                                <td>{{ medication.medication_name }}</td>
+                                <td>{{ medication.instructions }}</td>
+                                <td>{{ medication.dose_quantity }}</td>
+                                <td>{{ medication.rate_quantity }}</td>
+                                <td>{{ medication.prescriber_name }}</td>
+                                <td>
+                                    <a href="{% url 'HealthDesign:medication-update' demographics.id medication.id %}">Edit</a>&nbsp
+                                    <a href="{% url 'HealthDesign:medication-delete' demographics.id medication.id %}">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4><b>Care Plan</b> - <a href="{% url 'HealthDesign:careplan-add' demographics.id %}">Add</a></h4>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Instructions</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for careplan in demographics.careplan_set.all %}
+                            <tr>
+                                <td>{{ careplan.name  }}</td>
+                                <td>{{ careplan.date }}</td>
+                                <td>{{ careplan.instructions }}</td>
+                                <td>
+                                    <a href="{% url 'HealthDesign:careplan-update' demographics.id careplan.id %}">Edit</a>&nbsp
+                                    <a href="{% url 'HealthDesign:careplan-delete' demographics.id careplan.id %}">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4><b>Encounters</b> - <a href="{% url 'HealthDesign:encounters-add' demographics.id %}">Add</a></h4>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Encounter</th>
+                            <th>Provider</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for encounter in demographics.encounters_set.all %}
+                            <tr>
+                                <td>{{ encounter.encounter  }}</td>
+                                <td>{{ encounter.provider }}</td>
+                                <td>{{ encounter.location }}</td>
+                                <td>{{ encounter.date }}</td>
+                                <td>
+                                    <a href="{% url 'HealthDesign:encounters-update' demographics.id encounter.id %}">Edit</a>&nbsp
+                                    <a href="{% url 'HealthDesign:encounters-delete' demographics.id encounter.id %}">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4><b>Problem List</b> - <a href="{% url 'HealthDesign:problemlist-add' demographics.id %}">Add</a></h4>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Observation</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Comment</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for problemlist in demographics.problemlist_set.all %}
+                            <tr>
+                                <td>{{ problemlist.observation  }}</td>
+                                <td>{{ problemlist.status }}</td>
+                                <td>{{ problemlist.date }}</td>
+                                <td>{{ problemlist.comment }}</td>
+                                <td>
+                                    <a href="{% url 'HealthDesign:problemlist-update' demographics.id problemlist.id %}">Edit</a>&nbsp
+                                    <a href="{% url 'HealthDesign:problemlist-delete' demographics.id problemlist.id %}">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4><b>Procedures</b> - <a href="{% url 'HealthDesign:procedures-add' demographics.id %}">Add</a></h4>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Procedure</th>
+                            <th>Date</th>
+                            <th>Provider</th>
+                            <th>Location</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for procedure in demographics.procedures_set.all %}
+                            <tr>
+                                <td>{{ procedure.procedure  }}</td>
+                                <td>{{ procedure.date }}</td>
+                                <td>{{ procedure.provider }}</td>
+                                <td>{{ procedure.location }}</td>
+                                <td>
+                                    <a href="{% url 'HealthDesign:procedures-update' demographics.id procedure.id %}">Edit</a>&nbsp
+                                    <a href="{% url 'HealthDesign:procedures-delete' demographics.id procedure.id %}">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
